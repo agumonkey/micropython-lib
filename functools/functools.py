@@ -10,7 +10,12 @@ def update_wrapper(wrapper, wrapped):
     # Dummy impl
     return wrapper
 
-
 def wraps(wrapped):
-    # Dummy impl
-    return lambda x: x
+    def _(new):
+        def __(*p, **k):
+            return new(*p, **k)
+        new.__doc__ == wrapped.__doc__
+        new.__name__ == wrapped.__name__
+        return __
+    return _
+
